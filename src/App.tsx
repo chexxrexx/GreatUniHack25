@@ -9,6 +9,8 @@ import './index.css';
 function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<'globe' | 'passport'>('globe');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
 
   return (
     <div className="min-h-screen">
@@ -18,6 +20,8 @@ function App() {
         onClose={() => setIsDrawerOpen(false)}
         onNavigate={setCurrentPage}
         currentPage={currentPage}
+        isLoggedIn={isLoggedIn}
+        onAuthChange={setIsLoggedIn} // Pass the setter function
       />
       <div className="pt-16">
         {currentPage === 'globe' ? <GlobePage /> : <PassportPage />}
