@@ -6,10 +6,19 @@ import { X, ArrowLeft, Mail, Lock, User } from 'lucide-react';
 interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
+<<<<<<< HEAD
   onNavigate: (page: 'globe' | 'passport' | 'ticket') => void;
   currentPage: 'globe' | 'passport' | 'ticket';
   isLoggedIn: boolean;
   onAuthChange: (isLoggedIn: boolean) => void;
+=======
+  onNavigate: (page: 'globe' | 'passport') => void;
+  currentPage: 'globe' | 'passport';
+  authStatus: 'loggedOut' | 'needsOnboarding' | 'loggedIn';
+  onLoginSuccess: () => void;
+  onSignUpSuccess: () => void;
+  onLogout: () => void;
+>>>>>>> e9a8ee668ef5ece97e4feccb61b474442e62f3e6
 }
 
 type DrawerView = 'menu' | 'login' | 'signup';
@@ -19,15 +28,25 @@ export default function Drawer({
   onClose,
   onNavigate,
   currentPage,
-  isLoggedIn,
-  onAuthChange,
+  authStatus,
+  onLoginSuccess,
+  onSignUpSuccess,
+  onLogout,
 }: DrawerProps) {
   const [view, setView] = useState<DrawerView>('menu');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+<<<<<<< HEAD
   const handleNavigate = (page: 'globe' | 'passport' | 'ticket') => {
+=======
+  const handleNavigate = (page: 'globe' | 'passport') => {
+    if (page === 'passport' && authStatus !== 'loggedIn') {
+      setView('login'); 
+      return;
+    }
+>>>>>>> e9a8ee668ef5ece97e4feccb61b474442e62f3e6
     onNavigate(page);
     onClose();
   };
@@ -45,19 +64,20 @@ export default function Drawer({
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Logging in with:', email, password);
-    onAuthChange(true);
+    onLoginSuccess();
     handleClose();
   };
 
   const handleSignUp = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Signing up with:', name, email, password);
-    onAuthChange(true);
+    onSignUpSuccess();
     handleClose();
   };
 
   const handleLogout = () => {
-    onAuthChange(false);
+    onLogout(); 
+    onNavigate('globe'); 
     handleClose();
   };
 
@@ -189,7 +209,7 @@ export default function Drawer({
         
         <div className="pt-2 border-t" />
 
-        {isLoggedIn ? (
+        {authStatus === 'loggedIn' ? (
           <button
             onClick={handleLogout}
             className="w-full text-left px-4 py-3 rounded-md text-red-600 hover:bg-red-50 transition-colors font-semibold"
