@@ -4,11 +4,12 @@ import Navbar from './components/Navbar.tsx';
 import Drawer from './components/Drawer.tsx';
 import GlobePage from './pages/GlobePage.tsx';
 import PassportPage from './pages/PassportPage.tsx';
+import TicketPage from './pages/TicketPage.tsx';
 import './index.css';
 
 function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState<'globe' | 'passport'>('globe');
+  const [currentPage, setCurrentPage] = useState<'globe' | 'passport' | 'ticket'>('globe');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
 
@@ -21,10 +22,12 @@ function App() {
         onNavigate={setCurrentPage}
         currentPage={currentPage}
         isLoggedIn={isLoggedIn}
-        onAuthChange={setIsLoggedIn} // Pass the setter function
+        onAuthChange={setIsLoggedIn} 
       />
       <div className="pt-16">
-        {currentPage === 'globe' ? <GlobePage /> : <PassportPage />}
+      {currentPage === 'globe' && <GlobePage />}
+      {currentPage === 'passport' && <PassportPage />}
+      {currentPage === 'ticket' && <TicketPage />}
       </div>
     </div>
   );

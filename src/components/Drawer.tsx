@@ -6,8 +6,8 @@ import { X, ArrowLeft, Mail, Lock, User } from 'lucide-react';
 interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigate: (page: 'globe' | 'passport') => void;
-  currentPage: 'globe' | 'passport';
+  onNavigate: (page: 'globe' | 'passport' | 'ticket') => void;
+  currentPage: 'globe' | 'passport' | 'ticket';
   isLoggedIn: boolean;
   onAuthChange: (isLoggedIn: boolean) => void;
 }
@@ -27,7 +27,7 @@ export default function Drawer({
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const handleNavigate = (page: 'globe' | 'passport') => {
+  const handleNavigate = (page: 'globe' | 'passport' | 'ticket') => {
     onNavigate(page);
     onClose();
   };
@@ -174,6 +174,17 @@ export default function Drawer({
           }`}
         >
           My Passport
+        </button>
+
+        <button
+          onClick={() => handleNavigate('ticket')}
+          className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+            currentPage === 'ticket'
+              ? 'bg-blue-100 text-blue-700 font-semibold'
+              : 'hover:bg-gray-100 text-gray-700'
+          }`}
+        >
+          My Tickets
         </button>
         
         <div className="pt-2 border-t" />

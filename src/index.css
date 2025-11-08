@@ -3,3 +3,32 @@
 @tailwind components;
 @tailwind utilities;
 
+.scan-button {
+  
+  padding: 15px 30px; 
+  
+  /* Appearance and Text */
+  background-color: #007bff; /* A bold, primary blue */
+  color: white;              /* White text for contrast */
+  font-size: 18px;           /* Larger, easier-to-read text */
+  font-weight: bold;
+  
+  /* Polishing */
+  border: none;              /* Remove default border */
+  border-radius: 10px;       /* Modern, rounded corners */
+  cursor: pointer;           /* Shows it's interactive */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle 3D lift */
+  transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth effects */
+}
+
+/* Interactivity (Hover and Active) */
+.scan-button:hover {
+  background-color: #0056b3; /* Slightly darker blue on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+}
+
+.scan-button:active {
+  background-color: #004085; /* Darkest blue when pressed */
+  transform: translateY(2px); /* Provides a satisfying "push" effect */
+}
+

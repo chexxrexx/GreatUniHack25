@@ -51,7 +51,7 @@ export default function GlobePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center">
-      <div className="text-center">
+      <div className="text-center top-margin: mt-16">
         <h1 className="text-5xl font-bold text-gray-800 mb-4">
           Discover Your Next Adventure
         </h1>
@@ -99,7 +99,7 @@ export default function GlobePage() {
           )}
         </div>
 
-        <div className="mt-32 max-w-4xl mx-auto grid grid-cols-3 md:grid-cols-5 gap-4">
+        <div className="mt-10 max-w-4xl mx-auto grid grid-cols-3 md:grid-cols-5 gap-4">
           {countries.map((country, index) => (
             <div
               key={country.name}
