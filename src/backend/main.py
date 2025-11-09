@@ -26,7 +26,7 @@ LANDMARKS = {
     "tokyo_tower": "Tokyo",
     "statue_of_liberty": "New York",
     "sydney_opera_house": "Sydney"
-}
+} 
 
 @app.post("/scan")
 async def scan_landmark(file: UploadFile = File(...)):
