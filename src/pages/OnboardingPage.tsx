@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { User, DollarSign, MapPin, Smile, Check } from 'lucide-react';
+import { useNavigate } from "react-router-dom";
 
 // Define the props, including the callback function
 interface OnboardingPageProps {
@@ -10,6 +11,7 @@ interface OnboardingPageProps {
 
 // Define steps
 const steps = [
+  { id : 0, name: 'Your Details', icon: User },
   { id: 1, name: 'Gender', icon: User },
   { id: 2, name: 'Budget', icon: DollarSign },
   { id: 3, name: 'Hobbies', icon: Smile },
@@ -18,13 +20,15 @@ const steps = [
 ];
 
 export default function OnboardingPage({ onOnboardingComplete }: OnboardingPageProps) {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
+  const navigate = useNavigate();
   
   const handleNext = () => {
-    if (currentStep < steps.length) {
+    if (currentStep < steps.length-1) {
       setCurrentStep(currentStep + 1);
     } else {
-      onOnboardingComplete(); // Tell App.tsx we are done
+      navigate("/globe"); 
+      onOnboardingComplete();
     }
   };
 
@@ -37,6 +41,15 @@ export default function OnboardingPage({ onOnboardingComplete }: OnboardingPageP
   // Helper to render the content for the current step
   const renderStepContent = () => {
     switch (currentStep) {
+      case 0:
+        return (
+          <div> 
+            <h2 className = "text-2xl font-semibold text-gray-800 mb-2">What's your name?</h2>
+            <input type="text" placeholder="Enter your name" className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <h2 className = "text-2xl font-semibold text-gray-800 mb-2 mt-4">What's your email address?</h2>
+            <input type="text" placeholder="example@gmail.com" className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+        )
       case 1:
         return (
           <div>
@@ -65,9 +78,9 @@ export default function OnboardingPage({ onOnboardingComplete }: OnboardingPageP
           <div>
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select your hobbies?</h2>
             <div className="space-y-3">
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">$ Hiking</button>
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">$$ Swimming</button>
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">$$$ Reading</button>
+              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Hiking</button>
+              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Backpacking</button>
+              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Photography</button>
             </div>
           </div>
         );

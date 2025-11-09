@@ -39,7 +39,7 @@ export default function GlobePage() {
   const handleGlobeClick = () => {
     setIsSpinning(false);
     const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-    setSelectedCountry(randomCountry.name);
+    setSelectedCountry('France');
     setShowCountry(true);
 
     setTimeout(() => {

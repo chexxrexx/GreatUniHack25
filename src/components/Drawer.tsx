@@ -34,7 +34,7 @@ export default function Drawer({
   // NOTE: correct union type used here
   const handleNavigate = (page: 'globe' | 'passport' | 'ticket') => {
     // require login for restricted pages (passport & ticket)
-    if ((page === 'passport') && authStatus !== 'loggedIn') {
+    if ((page === 'passport' || page === 'globe' || page === 'ticket') && authStatus !== 'loggedIn') {
       setView('login');
       return;
     }
