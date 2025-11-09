@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Globe } from 'lucide-react';
+import { useNavigate as UseNavigate } from 'react-router-dom';
 
 const countries = [
   { name: 'Japan', emoji: '🇯🇵', color: 'text-red-500' },
@@ -25,6 +26,7 @@ export default function GlobePage() {
   const [isSpinning, setIsSpinning] = useState(true);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [showCountry, setShowCountry] = useState(false);
+  const navigate = UseNavigate();
 
   useEffect(() => {
     if (!isSpinning) return;
@@ -38,16 +40,20 @@ export default function GlobePage() {
 
   const handleGlobeClick = () => {
     setIsSpinning(false);
+  
+    // Pick a random country or force France
     const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-    setSelectedCountry('France');
+    setSelectedCountry('France'); // or randomCountry.name
     setShowCountry(true);
-
+  
+    // Redirect after short delay
     setTimeout(() => {
-      setIsSpinning(true);
-      setShowCountry(false);
-      setSelectedCountry(null);
-    }, 3000);
+      navigate('/matchmaking', {
+        state: { country: 'France', emoji: '🇫🇷' }, // pass data to matchmaking page
+      });
+    }, 1000); // 1 second delay for effect
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center">

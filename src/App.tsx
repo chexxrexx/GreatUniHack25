@@ -5,7 +5,8 @@ import Drawer from './components/Drawer.tsx';
 import GlobePage from './pages/GlobePage.tsx';
 import PassportPage from './pages/PassportPage.tsx';
 import TicketPage from './pages/TicketPage.tsx';
-import OnboardingPage from './pages/OnboardingPage.tsx';
+import OnboardingPage from './pages/OnboardingPage.tsx'
+import MatchmakingPage from './pages/Matchmaking.tsx';;
 import ScanPage from './pages/ScanPage.tsx';
 import './index.css';
 
@@ -49,6 +50,7 @@ function AppContent({ authStatus, setAuthStatus }: { authStatus: AuthStatus; set
         <Routes>
           <Route path="/globe" element={<GlobePage />} />
           <Route path="/passport" element={<PassportPage />} />
+          <Route path="/matchmaking" element={<MatchmakingPage />} />
           <Route path="/ticket" element={<TicketPage />} />
           <Route path="/scan" element={<ScanPage />} /> {/* hidden from drawer */}
           <Route path="*" element={<Navigate to="/globe" replace />} /> {/* fallback */}
