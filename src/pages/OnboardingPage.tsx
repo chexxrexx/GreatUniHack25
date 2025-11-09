@@ -1,7 +1,7 @@
 // src/pages/OnboardingPage.tsx
 
 import React, { useState } from 'react';
-import { User, DollarSign, MapPin, Smile, Check } from 'lucide-react';
+import { User, DollarSign, MapPin, Smile, Check , Car} from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 
 // Define the props, including the callback function
@@ -14,14 +14,36 @@ const steps = [
   { id : 0, name: 'Your Details', icon: User },
   { id: 1, name: 'Gender', icon: User },
   { id: 2, name: 'Budget', icon: DollarSign },
-  { id: 3, name: 'Hobbies', icon: Smile },
-  { id: 4, name: 'Countries', icon: MapPin },
-  { id: 5, name: 'Done!', icon: Check },
+  { id: 3 , name: 'Drive', icon: Car}, 
+  { id: 4, name: 'Hobbies', icon: Smile },
+  { id: 5, name: 'Countries', icon: MapPin },
+  { id: 6, name: 'Done!', icon: Check },
 ];
 
 export default function OnboardingPage({ onOnboardingComplete }: OnboardingPageProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const navigate = useNavigate();
+
+  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
+
+    // Helper for toggling selections (max 3)
+    const toggleSelection = (
+    value: string,
+    selectedList: string[],
+    setSelectedList: React.Dispatch<React.SetStateAction<string[]>>
+    ) => {
+    if (selectedList.includes(value)) {
+        // Unselect
+        setSelectedList(selectedList.filter((item) => item !== value));
+    } else if (selectedList.length < 3) {
+        // Select (max 3)
+        setSelectedList([...selectedList, value]);
+    } else {
+        alert("You can only select up to 3 options!");
+    }
+    };
+
   
   const handleNext = () => {
     if (currentStep < steps.length-1) {
@@ -73,29 +95,59 @@ export default function OnboardingPage({ onOnboardingComplete }: OnboardingPageP
             </div>
           </div>
         );
+
       case 3:
         return (
           <div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">Can you drive? ?</h2>
+            <div className="space-y-3">
+              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Yes </button>
+              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">No</button>
+            </div>
+          </div>
+        );
+
+     case 4:
+        return (
+            <div>
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select your hobbies?</h2>
             <div className="space-y-3">
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Hiking</button>
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Backpacking</button>
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Photography</button>
+                {["Hiking", "Reading", "Cooking", "Gaming", "Painting", "Surfing"].map((hobby) => (
+                <button
+                    key={hobby}
+                    onClick={() => toggleSelection(hobby, selectedHobbies, setSelectedHobbies)}
+                    className={`w-full p-4 border rounded-lg text-left hover:bg-gray-50 ${
+                    selectedHobbies.includes(hobby) ? "bg-blue-100 border-blue-400" : ""
+                    }`}
+                >
+                    {hobby}
+                </button>
+                ))}
             </div>
-          </div>
+            </div>
         );
-      case 4:
+
+     case 5:
         return (
-          <div>
+            <div>
             <h2 className="text-2xl font-semibold text-gray-800 mb-6">Dream city to travel in?</h2>
             <div className="space-y-3">
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Paris</button>
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">Kuala Lumpur</button>
-              <button onClick={handleNext} className="w-full p-4 border rounded-lg text-left hover:bg-gray-50">London</button>
+                {["Paris", "Kuala Lumpur", "London", "Belgium", "Seoul", "Amsterdam"].map((city) => (
+                <button
+                    key={city}
+                    onClick={() => toggleSelection(city, selectedCountries, setSelectedCountries)}
+                    className={`w-full p-4 border rounded-lg text-left hover:bg-gray-50 ${
+                    selectedCountries.includes(city) ? "bg-blue-100 border-blue-400" : ""
+                    }`}
+                >
+                    {city}
+                </button>
+                ))}
             </div>
-          </div>
+            </div>
         );
-      case 5:
+
+      case 6:
         return (
           <div className="text-center">
             <Check className="w-24 h-24 text-green-500 mx-auto" />
