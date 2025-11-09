@@ -44,15 +44,37 @@ export default function OnboardingPage({ onOnboardingComplete }: OnboardingPageP
     }
     };
 
-  
-    const handleNext = () => {
+    const handleNext = async () => {
       if (currentStep < steps.length - 1) {
         setCurrentStep(currentStep + 1);
       } else {
-        // Finish onboarding
+        // When onboarding is complete, send data to backend
+        try {
+          const response = await fetch("http://localhost:5000/api/add_user", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: "testuser",           // later: replace with real user data
+              password: "password123",        // (e.g. from signup form or auth)
+              name: "John Doe",               // you can pull this from step 0 inputs
+              age: 25,                        // add this if your onboarding collects age
+              gender: "Male",                 // replace with selected gender
+              country: selectedCountries[0] || "France",
+              city: "Paris"
+            }),
+          });
+    
+          const result = await response.json();
+          console.log("Backend result:", result);
+    
+        } catch (error) {
+          console.error("Error adding user:", error);
+        }
+    
+        // Mark onboarding complete
         onOnboardingComplete();
     
-        // Pass selected data via navigate state
+        // Navigate to the globe with state
         navigate("/globe", {
           state: {
             hobbies: selectedHobbies,
@@ -61,6 +83,25 @@ export default function OnboardingPage({ onOnboardingComplete }: OnboardingPageP
         });
       }
     };
+    
+
+  
+    // const handleNext = () => {
+    //   if (currentStep < steps.length - 1) {
+    //     setCurrentStep(currentStep + 1);
+    //   } else {
+    //     // Finish onboarding
+    //     onOnboardingComplete();
+    
+    //     // Pass selected data via navigate state
+    //     navigate("/globe", {
+    //       state: {
+    //         hobbies: selectedHobbies,
+    //         countries: selectedCountries
+    //       }
+    //     });
+    //   }
+    // };
     
     // const handleNext = async () => {
     //   if (currentStep < steps.length - 1) {

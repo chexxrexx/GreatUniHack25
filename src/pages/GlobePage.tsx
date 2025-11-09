@@ -44,8 +44,9 @@ export default function GlobePage() {
   
     // Pick a random country or force France
     const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-    setSelectedCountry('France'); // or randomCountry.name
+    setSelectedCountry(randomCountry.name); // or randomCountry.name
     setShowCountry(true);
+    localStorage.setItem("selectedCountry", randomCountry.name);
   
     // Redirect after short delay
     setTimeout(() => {

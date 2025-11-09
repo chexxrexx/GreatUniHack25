@@ -6,18 +6,18 @@ import { useNavigate } from "react-router-dom";
 export default function TicketPage() {
   const navigate = useNavigate();
   const [attractions, setAttractions] = useState<string[]>([]);
-  const landmarkImg =
-    "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1200&q=60"; // Eiffel Tower fallback
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/attractions")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.places) setAttractions(data.places);
-        else console.error("No attractions found:", data);
-      })
-      .catch((err) => console.error("Error fetching attractions:", err));
-  }, []);
+    useEffect(() => {
+        const country = localStorage.getItem("selectedCountry") || "France";
+        fetch(`http://127.0.0.1:8000/attractions?country=${country}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.places) setAttractions(data.places);
+            else console.error("No attractions found:", data);
+          })
+          .catch((err) => console.error("Error fetching attractions:", err));
+      }, []);
+      
 
   const handleScan = () => navigate("/scan");
 
@@ -70,18 +70,6 @@ export default function TicketPage() {
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* Attraction info */}
-            <div className="border-t border-gray-100 p-6">
-              <h2 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-blue-500" /> Visit: {place}
-              </h2>
-              <img
-                src={landmarkImg}
-                alt={place}
-                className="rounded-lg w-full h-48 object-cover"
-              />
             </div>
 
             {/* CTA */}
